@@ -20,14 +20,24 @@ function displayWorks(filteredWorks = null){
 
   const worksToDisplay = filteredWorks || works;
 
-      for (let i=0; i< worksToDisplay.length ; i++) {
-          let travauxUrl= worksToDisplay[i].imageUrl;
-          let travauxImg = document.createElement("img");
-          travauxImg.setAttribute('src',travauxUrl);
-          travauxImg.classList.add("showcase");
+for (let i=0; i < worksToDisplay.length ; i++) {
+    const work = worksToDisplay[i];
+    const travauxUrl = work.iamgeUrl;
+    const title =work.title;
 
-          let travauxDiv = document.createElement("div");
-          travauxDiv.appendChild(travauxImg);
+    const travauxImg = document.createElement("img");
+    travauxImg.setAttribute('src',travauxUrl);
+    travauxImg.classList.add("showcase");
+
+    const travauxDiv = document.createElement("div");
+    travauxDiv.appendChild(travauxImg);
+
+    const titlePara = document.createElement('p');
+    titlePara.textContent = title;
+    titlePara.classList.add('work-title');
+
+          travauxDiv.appendChild(titlePara);
+
           galerie.appendChild(travauxDiv);
         }
   }
