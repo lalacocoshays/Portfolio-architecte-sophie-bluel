@@ -1,48 +1,45 @@
 const galerie = document.querySelector(".gallery")
 
+let works = [];
+
+function fetchWorks(){
 fetch("http://localhost:5678/api/works")
-.then(result => result.json())
-.then(result => console.log(result))
-
-
-function recupTravaux(){
-  let works = document.createElement("travaux");
-  fetch("http://localhost:5678/images/") .then(
-  (response)=>
-   response.json()
-  )
-  .then ((data) => {
-      let travauxUrl=data[1].url;
-      let travauxl = document.createElement("img")
-      travauxl.setAttribute('src',`${travauxUrl}`)
-      travauxl.classList.add("showcase")
-      let travaux = document.createElement("travaux")
-      travaux.appendChild(travauxl);
-  })
-  .catch (err=>console.log(err))
+.then((response) => response.json())
+.then((data) => {
+  works = data;
+  displayWorks();
+})
+.cath((err)=> {
+  console.error("Error fetching works:", err); 
+  });
 }
 
 
-//const loadImage = async (photo_reference) => {
-//  try {
-//    const res = await fetch(
-//      `http://localhost:5678/images/abajour-tahina1651286843956.png`
-//    )
-//    const data = await res.blob();
-//    setImage(URL.createObjectURL(data));
-//  } catch (error) {
-//    console.error(error)
-//  }
-//};
+function displayWorks(filteredWorks = null){
+  galerie.innerHTML = "";
 
-//let travaux = document.createElement("travaux");
-//travaux.className ="works";
-//travaux.src="http://localhost:5678/images/abajour-tahina1651286843956.png";
-//document.body.append(travaux);
+  const worksToDisplay = filteredWorks || works;
 
-//fetch("http://localhost:5678/images/abajour-tahina1651286843956.png")
-//.then(response => response.blob())
-//.then(image =>{
- // let element = document.createElement////("travaux");
- // element.setAttribute("src",URL.createObjectURL(image));
-//});
+      for (let i=0; i< worksToDisplay.length ; i++) {
+          let travauxUrl= worksToDisplay[i].imageUrl;
+          let travauxImg = document.createElement("img");
+          travauxImg.setAttribute('src',travauxUrl);
+          travauxImg.classList.add("showcase");
+
+          let travauxDiv = document.createElement("div");
+          travauxDiv.appendChild(travauxImg);
+          galerie.appendChild(travauxDiv);
+        }
+  }
+
+
+
+fetchWorks();
+
+function filterWorks(categoryId){
+  const filteredWorks = works.filter((item) => 
+  item.categoryId === categoryId);
+    displayWorks(filteredWorks);
+}
+
+
