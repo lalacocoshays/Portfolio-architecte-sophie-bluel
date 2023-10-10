@@ -22,7 +22,7 @@ function displayWorks(filteredWorks = null){
 
 for (let i=0; i < worksToDisplay.length ; i++) {
     const work = worksToDisplay[i];
-    const travauxUrl = work.iamgeUrl;
+    const travauxUrl = work.imageUrl;
     const title =work.title;
 
     const travauxImg = document.createElement("img");
