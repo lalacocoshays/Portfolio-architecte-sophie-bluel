@@ -9,7 +9,7 @@ fetch("http://localhost:5678/api/works")
   works = data;
   displayWorks();
 })
-.cath((err)=> {
+.catch((err)=> {
   console.error("Error fetching works:", err); 
   });
 }
